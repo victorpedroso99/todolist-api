@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using todolist_api.Dto;
 using todolist_api.Models;
 using todolist_api.Services;
 
@@ -9,10 +11,12 @@ namespace todolist_api.Controllers
     public class TaskController : ControllerBase
     {
         private readonly ITodoTaskService _todoTaskService;
+        private readonly IMapper _mapper;
 
-        public TaskController(ITodoTaskService todoTaskService)
+        public TaskController(ITodoTaskService todoTaskService, IMapper mapper)
         {
             _todoTaskService = todoTaskService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -49,6 +53,14 @@ namespace todolist_api.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTask(CreateTodoTaskDto createDto)
+        {
+            var task = _mapper.Map<TodoTask>(createDto);
+            await _todoTaskService.CreateTask(task);
+            return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
         }
     }
 }
