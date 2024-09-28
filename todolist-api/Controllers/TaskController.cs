@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace todolist_api.Controllers
 {
@@ -7,5 +6,6 @@ namespace todolist_api.Controllers
     [ApiController]
     public class TaskController : ControllerBase
     {
+
     }
 }
