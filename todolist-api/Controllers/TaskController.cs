@@ -16,8 +16,6 @@ namespace todolist_api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IAsyncEnumerable<TodoTask>>> GetTasks()
         {
             try
@@ -28,7 +26,28 @@ namespace todolist_api.Controllers
             }
             catch (Exception ex) 
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("{id:int}", Name = "GetTask")]
+        public async Task<ActionResult<TodoTask>> GetTask(int id)
+        {
+            try
+            {
+                var task = await _todoTaskService.GetTask(id);
+
+                if (task == null) 
+                {
+                    return NotFound("Task not found");
+                }
+
+                return Ok(task);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }
