@@ -11,6 +11,11 @@ namespace todolist_api.Mapper
             CreateMap<CreateTodoTaskDto, TodoTask>()
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdateAt, opt => opt.Ignore());
+
+            CreateMap<UpdateTodoTaskDto, TodoTask>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore()) // Ignore Id for the update mapping
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore()) // Ignore CreatedAt
+                .ForMember(dest => dest.UpdateAt, opt => opt.Ignore()); // Ignore UpdateAt
         }
     }
 }

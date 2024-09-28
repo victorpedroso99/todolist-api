@@ -60,7 +60,86 @@ namespace todolist_api.Controllers
         {
             var task = _mapper.Map<TodoTask>(createDto);
             await _todoTaskService.CreateTask(task);
-            return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
+            return CreatedAtRoute(nameof(GetTask), new { id = task.Id }, task);
+        }
+
+        [HttpPut]
+        [Route("{id:int}", Name = "UpdateTask")]
+        public async Task<IActionResult> UpdateTask(int id, [FromBody] UpdateTodoTaskDto updateDto)
+        {
+            if (updateDto == null || updateDto.Status == null)
+            {
+                return BadRequest("Status is required.");
+            }
+
+            try
+            {
+                var task = await _todoTaskService.GetTask(id);
+                if (task == null)
+                {
+                    return NotFound("Task not found.");
+                }
+
+                _mapper.Map(updateDto, task);
+
+                await _todoTaskService.UpdateTask(task);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPatch]
+        [Route("{id:int}", Name = "UpdateTaskStatus")]
+        public async Task<IActionResult> UpdateTaskStatus(int id, [FromBody] UpdateTodoTaskStatusDto updateDto)
+        {
+            if (updateDto == null)
+            {
+                return BadRequest("Status is required.");
+            }
+
+            try
+            {
+                var task = await _todoTaskService.GetTask(id);
+                if (task == null)
+                {
+                    return NotFound("Task not found.");
+                }
+
+                task.Status = updateDto.Status;
+                await _todoTaskService.UpdateTask(task);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id:int}", Name = "DeleteTask")]
+        public async Task<IActionResult> DeleteTask(int id)
+        {
+            try
+            {
+                var task = await _todoTaskService.GetTask(id);
+                if (task == null)
+                {
+                    return NotFound("Task not found.");
+                }
+
+                await _todoTaskService.DeleteTask(task);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

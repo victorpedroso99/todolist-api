@@ -25,12 +25,14 @@ namespace todolist_api.Services
 
         public async Task CreateTask(TodoTask task)
         {
+            task.CreatedAt = DateTime.Now;
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateTask(TodoTask task)
         {
+            task.UpdateAt = DateTime.Now;
             _context.Entry(task).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
