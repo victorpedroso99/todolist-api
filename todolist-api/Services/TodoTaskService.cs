@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using todolist_api.Context;
 using todolist_api.Models;
+using System.Net.Sockets;
+using System.Net;
 
 namespace todolist_api.Services
 {
