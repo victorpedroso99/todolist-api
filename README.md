@@ -1,6 +1,6 @@
 # Todolist api
 
-Foi criada uma api utilizando o modelo API MVC do C#, para esse caso poderia até ser utilizo o modelo de minimal api, porém optei por um modelo com controllers para melhor organização e caso sejam implantadas melhorias futuras, como autenticação, ficaria melhor para essa implementação.
+Foi criada uma api utilizando o modelo API MVC do C#, para esse caso poderia até ser utilizado o modelo de minimal api, porém optei por um modelo com controllers para melhor organização e caso sejam implantadas melhorias futuras, como autenticação, ficaria melhor para essa implementação.
 
 Esse projeto utiliza:
 - SQL Server como SGBD para armazenamento dos dados
